@@ -1,6 +1,7 @@
 === Plugin Name ===
 Contributors: Rimon Habib
-Tags: Twitter, 
+Donate link: http://rimonhabib.com/
+Tags: Twitter, Twitter widget, Tweeter sidebar widget
 Requires at least: 2.0.2
 Tested up to: 3.2.1
 Stable tag: trunk
