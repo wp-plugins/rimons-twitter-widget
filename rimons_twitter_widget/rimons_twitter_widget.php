@@ -1,13 +1,11 @@
 <?php
-
-/*
- * Plugin Name: Rimon's Twitter Widget
+/* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.
- * Version: 0.1
+ * Version: 0.2
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
- * License: GPLv2
+ *
  */
 
 

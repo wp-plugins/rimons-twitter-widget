@@ -1,11 +1,11 @@
 === Plugin Name ===
-Contributors: Rimon's Twitter Widget
+Contributors: Rimon Habib
 Tags: Twitter, 
 Requires at least: 2.0.2
 Tested up to: 3.2.1
-tag: trunk
+Stable tag: trunk
 
-This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customizecolor schemes and size to fit it to your sidebar..
+This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. 
 
 == Description ==
 This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize color schemes and size to fit it to your sidebar.
@@ -19,3 +19,9 @@ To install, simple extract the 'rimons_twitter_widget' folder into your 'wp-cont
 
 More information, the latest updates can be found at
 http://rimonhabib.com
+
+
+== Changelog ==
+
+= 0.1 =
+* BUG FIX: header information
