@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: <a href="http://rimonhabib.com/">Rimon Habib</a>
+Contributors: Rimon Habib
 Donate link: http://rimonhabib.com/
 Tags: Twitter, Twitter widget, Tweeter sidebar widget
 Requires at least: 2.0.2
