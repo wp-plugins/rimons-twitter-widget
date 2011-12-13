@@ -25,4 +25,11 @@ http://rimonhabib.com
 == Changelog ==
 
 = 0.1 =
+* First Version
+
+= 0.2 =
 * BUG FIX: header information
+
+= 0.3 =
+* Admin Notice updated
+* Widget style updated

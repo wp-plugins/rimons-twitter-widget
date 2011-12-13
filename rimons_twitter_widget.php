@@ -1,8 +1,8 @@
 <?php
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
- * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.
- * Version: 0.2
+ * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
+ * Version: 0.3
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
@@ -15,10 +15,21 @@ register_activation_hook( __FILE__,'activate');
 register_deactivation_hook( __FILE__,'deactivate');
 
  function activation_notice(){
-    echo '<div class="updated">
-       <p>Thank you for installing <strong>Simple Twitter Widget</strong>. See the Widget page to configure twitter widget.</p>
+    echo '<div class="updated" style="background-color: #53be2a; border-color:#199b57">
+	
+       <p>Thank you for installing <strong>Rimons Twitter Widget</strong>. See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget.</p>
         </div>';
 }
+
+
+
+
+	
+
+
+
+
+
 
   function activate(){
       
@@ -26,29 +37,35 @@ register_deactivation_hook( __FILE__,'deactivate');
             
                           'twitter_id' => "",
                           'twitter_title' => "",
-                          'width' => 198,
-                          'height' => 300,
+                          'tweeter_width' => 198,
+                          'tweeter_height' => 300,
                           'shell_background' => "#c4deeb",
                           'shell_color' => '#3d2c3d',
                           'tweet_background' => '#eaf6fd',
                           'tweet_color' => '#816666',
                           'tweet_links' => '#497da8',
-                          'scroll' => 'false',
-                          'loop' => 'false',
-                          'live' => 'false'
+                          'tweet_scroll' => 'false',
+                          'tweet_loop' => 'false',
+                          'tweet_live' => 'false',
+			  'true' => '<option value="true">True</option>
+					<option value="false">False</option>',
+				
+
+			  'false' => '	<option value="false">False</option>
+					<option value="true">True</option>'
                            );
       
       
       
         rwr_initialize('rwr_twitter_options',$twitter_options);
-        add_action('admin_notices', 'activation_notice');
+        
        
   }
  
 
   
   function deactivate(){
-   // delete_option('rwr_twitter_options');
+   activate();
     
   }
   
@@ -83,8 +100,8 @@ register_deactivation_hook( __FILE__,'deactivate');
       ?>
       <p><label>Title:<input name="twitter_title" type="text" value="<?php echo $twitter_options['twitter_title'] ?>" /> </label> </p>
       <p><label>Your twitter ID: <input name="twitter_id" type="text" value="<?php echo $twitter_options['twitter_id'] ?>" /> </label> </p>
-      <p><label>Width: <input name="twitter_width" type="text" size="3" value="<?php echo $twitter_options['width'] ?>" /> </label>
-         <label>Height: <input name="twitter_height" type="text" size="3" value="<?php echo $twitter_options['height'] ?>" /> </label>
+      <p><label>Width: <input name="twitter_width" type="text" size="3" value="<?php echo $twitter_options['tweeter_width'] ?>" /> </label>
+         <label>Height: <input name="twitter_height" type="text" size="3" value="<?php echo $twitter_options['tweeter_height'] ?>" /> </label>
       
       </p>
       <p><label> Container Background: <input name="shell_background" type="text" size="7" value="<?php echo $twitter_options['shell_background'] ?>" /> </label>
@@ -97,9 +114,13 @@ register_deactivation_hook( __FILE__,'deactivate');
       </p> 
       <p><label> Tweet links color: <input name="tweet_links" type="text" size="7" value="<?php echo $twitter_options['tweet_links'] ?>" /> </label></p>
       
-      <p><label> Scrool: <input type="radio" value="true" name="tweet_scroll" />Ture &nbsp;&nbsp;&nbsp; <input type="radio" value="false" name="tweet_scroll" />False </label> <br>
-         <label> Loop: <input type="radio" value="true" name="tweet_loop" />Ture  &nbsp;&nbsp;&nbsp; <input type="radio" value="false" name="tweet_loop" />False</label>  <br>
-         <label> Live: <input type="radio" value="true" name="tweet_live" />Ture  &nbsp;&nbsp;&nbsp; <input type="radio" value="false" name="tweet_live" />False</label>   <br>
+      <p><label> Scrool: <select name="tweet_scroll"><?php echo $twitter_options[$twitter_options['tweet_scroll']]; ?></select>
+	</label><br>
+         <label> Loop: <select name="tweet_loop"><?php echo $twitter_options[$twitter_options['tweet_loop']]; ?></select> </label>
+	<br>
+
+         <label> Live: <select name="tweet_live"><?php echo $twitter_options[$twitter_options['tweet_live']]; ?></select>
+	</label><br>
       </p> 
       
       <?php
@@ -123,13 +144,13 @@ register_deactivation_hook( __FILE__,'deactivate');
       
       
       if(!$_POST['twitter_width'])
-          $width = $twitter_options['width'];
+          $width = $twitter_options['tweeter_width'];
       else 
       $width = attribute_escape($_POST['twitter_width']);
       
       
       if(!$_POST['twitter_height'])
-          $height = $twitter_options['height'];
+          $height = $twitter_options['tweeter_height'];
       else 
       $height = attribute_escape($_POST['twitter_height']);
       
@@ -166,18 +187,18 @@ register_deactivation_hook( __FILE__,'deactivate');
       $tweet_links = attribute_escape($_POST['tweet_links']);
       
       if(!$_POST['tweet_scroll'])
-          $scroll = $twitter_options['scroll'];
+          $scroll = $twitter_options['tweet_scroll'];
       else 
       $scroll = attribute_escape($_POST['tweet_scroll']);
       
       if(!$_POST['tweet_loop'])
-          $loop = $twitter_options['loop'];
+          $loop = $twitter_options['tweet_loop'];
       else 
       $loop = attribute_escape($_POST['tweet_loop']);
       
       
       if(!$_POST['tweet_live'])
-          $live = $twitter_options['live'];
+          $live = $twitter_options['tweet_live'];
       else 
       $live = attribute_escape($_POST['tweet_live']);
       
@@ -187,16 +208,22 @@ register_deactivation_hook( __FILE__,'deactivate');
             
                           'twitter_id' => "$twitter_id",
                           'twitter_title' => "$twitter_title",
-                          'width' => "$width",
-                          'height' => "$height",
+                          'tweeter_width' => "$width",
+                          'tweeter_height' => "$height",
                           'shell_background' => "$shell_background",
                           'shell_color' => "$shell_color",
                           'tweet_background' => "$tweet_background",
                           'tweet_color' => "$tweet_color",
                           'tweet_links' => "$tweet_links",
-                          'scroll' => "$scroll",
-                          'loop' => "$loop",
-                          'live' => "$live"
+                          'tweet_scroll' => "$scroll",
+                          'tweet_loop' => "$loop",
+                          'tweet_live' => 'false',
+			  'true' => '<option value="true">True</option>
+					<option value="false">False</option>',
+				
+
+			  'false' => '	<option value="false">False</option>
+					<option value="true">True</option>'
                            );
  
              
@@ -206,8 +233,10 @@ register_deactivation_hook( __FILE__,'deactivate');
              
              
     }
-  
-  
+	$twitter_options=get_option('rwr_twitter_options');  
+	if(!$twitter_options['twitter_id'] && is_admin())
+	add_action('admin_notices','activation_notice');
+
  function rwr_twitter_widget_frontend($args)
  {
        $twitter_options=get_option('rwr_twitter_options');
@@ -223,8 +252,8 @@ register_deactivation_hook( __FILE__,'deactivate');
                       type: 'profile',
                       rpp: 7,
                       interval: 30000,
-                      width: <?php echo $twitter_options['width'] ?>,
-                      height: <?php echo $twitter_options['height'] ?> ,
+                      width: <?php echo $twitter_options['tweeter_width'] ?>,
+                      height: <?php echo $twitter_options['tweeter_height'] ?> ,
                       theme: {
                         shell: {
                           background: '<?php echo $twitter_options['shell_background'] ?>',
@@ -237,9 +266,9 @@ register_deactivation_hook( __FILE__,'deactivate');
                         }
                       },
                       features: {
-                        scrollbar: <?php echo $twitter_options['scroll'] ?>,
-                        loop: <?php echo $twitter_options['loop'] ?>,
-                        live: <?php echo $twitter_options['live'] ?>,
+                        scrollbar: <?php echo $twitter_options['tweet_scroll'] ?>,
+                        loop: <?php echo $twitter_options['tweet_loop'] ?>,
+                        live: <?php echo $twitter_options['tweet_live'] ?>,
                         behavior: 'all'
                       }
                     }).render().setUser('<?php echo $twitter_options['twitter_id'] ?>').start();
@@ -248,6 +277,7 @@ register_deactivation_hook( __FILE__,'deactivate');
       
       else :
       echo "<p>Please Enter your twitter ID to show tweets from twitter</p>";
+	
       endif;
       
         echo $args['after_widget'];
