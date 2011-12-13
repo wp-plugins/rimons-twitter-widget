@@ -46,13 +46,7 @@ register_deactivation_hook( __FILE__,'deactivate');
                           'tweet_links' => '#497da8',
                           'tweet_scroll' => 'false',
                           'tweet_loop' => 'false',
-                          'tweet_live' => 'false',
-			  'true' => '<option value="true">True</option>
-					<option value="false">False</option>',
-				
-
-			  'false' => '	<option value="false">False</option>
-					<option value="true">True</option>'
+                          'tweet_live' => 'false'
                            );
       
       
@@ -65,7 +59,7 @@ register_deactivation_hook( __FILE__,'deactivate');
 
   
   function deactivate(){
-   activate();
+  // activate();
     
   }
   
@@ -114,12 +108,27 @@ register_deactivation_hook( __FILE__,'deactivate');
       </p> 
       <p><label> Tweet links color: <input name="tweet_links" type="text" size="7" value="<?php echo $twitter_options['tweet_links'] ?>" /> </label></p>
       
-      <p><label> Scrool: <select name="tweet_scroll"><?php echo $twitter_options[$twitter_options['tweet_scroll']]; ?></select>
+      <p><label> Scrool: 
+		<select name="tweet_scroll">
+			<option value="true">True</option>
+			<option value="false" <?php if($twitter_options['tweet_scroll']=='false') echo 'selected'; ?>>False
+			</option>
+			</select>
 	</label><br>
-         <label> Loop: <select name="tweet_loop"><?php echo $twitter_options[$twitter_options['tweet_loop']]; ?></select> </label>
+         <label> Loop: <select name="tweet_loop">
+
+		<option value="true">True</option>
+		<option value="false" <?php if($twitter_options['tweet_loop']=='false') echo 'selected'; ?>>False
+			</option>
+		</select> </label>
 	<br>
 
-         <label> Live: <select name="tweet_live"><?php echo $twitter_options[$twitter_options['tweet_live']]; ?></select>
+         <label> Live: <select name="tweet_live">
+
+		<option value="true">True</option>
+		<option value="false" <?php if($twitter_options['tweet_live']=='false') echo 'selected'; ?>>False
+			</option>
+		</select>
 	</label><br>
       </p> 
       
@@ -217,13 +226,7 @@ register_deactivation_hook( __FILE__,'deactivate');
                           'tweet_links' => "$tweet_links",
                           'tweet_scroll' => "$scroll",
                           'tweet_loop' => "$loop",
-                          'tweet_live' => 'false',
-			  'true' => '<option value="true">True</option>
-					<option value="false">False</option>',
-				
-
-			  'false' => '	<option value="false">False</option>
-					<option value="true">True</option>'
+                          'tweet_live' => "$live"
                            );
  
              
