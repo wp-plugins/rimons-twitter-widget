@@ -3,7 +3,7 @@ Contributors: Rimon_Habib
 Donate link: http://rimonhabib.com/
 Tags: Twitter, Twitter widget, Tweeter sidebar widget
 Requires at least: 2.0.2
-Tested up to: 3.2.1
+Tested up to: 3.3
 Stable tag: trunk
 
 This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. 
@@ -33,3 +33,9 @@ http://rimonhabib.com
 = 0.3 =
 * Admin Notice updated
 * Widget style updated
+
+= 0.4 =
+* Admin Notice updated
+* Widget style updated
+* performance updated
+* Structure updated
