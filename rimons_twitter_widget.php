@@ -129,7 +129,7 @@ class rtw_twitter_widget extends WP_Widget
                 $instance['rtw_twitter_container_color'] = $new_instance['rtw_twitter_container_color'];
                 $instance['rtw_twitter_tweet_background'] = $new_instance['rtw_twitter_tweet_background'];
                 $instance['rtw_twitter_tweet_color'] = $new_instance['rtw_twitter_tweet_color'];
-                $instance['rtw_twitter_tweet_link_color'] = $new_instance['rtw_twitter_link_color'];
+                $instance['rtw_twitter_tweet_link_color'] = $new_instance['rtw_twitter_tweet_link_color'];
                 $instance['rtw_twitter_scroll'] = $new_instance['rtw_twitter_scroll'];
                 $instance['rtw_twitter_loop'] = $new_instance['rtw_twitter_loop'];
                 $instance['rtw_twitter_live'] = $new_instance['rtw_twitter_live'];
