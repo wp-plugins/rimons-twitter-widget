@@ -39,3 +39,7 @@ http://rimonhabib.com
 * Widget style updated
 * performance updated
 * Structure updated
+
+= 0.5 =
+* New option added, twitter logo add or remove
+* structure updated
