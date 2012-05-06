@@ -2,7 +2,7 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 0.4
+ * Version: 0.5
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
@@ -55,30 +55,37 @@ register_deactivation_hook( __FILE__,'rtw_deactivate');
 
 class rtw_twitter_widget extends WP_Widget
 {
-    
+
     function rtw_twitter_widget()
     {
       parent::WP_Widget( $id = 'rtw_twitter_widget', $name = 'Rimons Twitter Widget'/*get_class($this)*/, $options = array( 'description' => 'Grab your tweets from twitter and show it to your sidebar' ) );
 	
     }
     
-    
-    
-    
+
+
+
+                            
+                            
+        
+
     function widget( $args, $instance ) {
+                  
 		extract( $args );
 		$title = apply_filters( 'widget_title', $instance['rtw_twitter_title'] );
+                   
 		echo $before_widget;
 		if ( $title )
 			echo $before_title . $title . $after_title; 
 		
 
  
-                    if($instance['rtw_twitter_username']): ?>
+                    if($instance['rtw_twitter_username']){ ?>
                          
                                    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
                                          <script>
-                                        new TWTR.Widget({
+                                        
+                                       new TWTR.Widget({
                                           version: 2,
                                           type: 'profile',
                                           rpp: 7,
@@ -103,18 +110,25 @@ class rtw_twitter_widget extends WP_Widget
                                             behavior: 'all'
                                           }
                                         }).render().setUser('<?php echo $instance['rtw_twitter_username'] ?>').start();
-                                        </script>
+                                        
+                                   </script>
                           <?php
-
-                          else :
+                          
+                            
+                          }
+                          else {
                           echo "<p>Please Enter your twitter ID to show tweets from twitter</p>";
 
-                          endif;
+                          }
                             echo $after_widget;
+                            
+                        
+                        
 	}
     
     
     
+
         
         
         
@@ -133,8 +147,7 @@ class rtw_twitter_widget extends WP_Widget
                 $instance['rtw_twitter_scroll'] = $new_instance['rtw_twitter_scroll'];
                 $instance['rtw_twitter_loop'] = $new_instance['rtw_twitter_loop'];
                 $instance['rtw_twitter_live'] = $new_instance['rtw_twitter_live'];
-                
-                
+                $instance['rtw_twitter_show_logo'] = $new_instance['rtw_twitter_show_logo'];
                 
 		return $instance;
 	}
@@ -149,7 +162,8 @@ class rtw_twitter_widget extends WP_Widget
     
     
     function form ($instance)
-    {
+    { 
+        global $logo;
         
         $instance['rtw_twitter_width']= ($instance['rtw_twitter_width'] ?  $instance['rtw_twitter_width'] : '198' );
         $instance['rtw_twitter_height']= ($instance['rtw_twitter_height'] ?  $instance['rtw_twitter_height'] : '300' );
@@ -162,9 +176,12 @@ class rtw_twitter_widget extends WP_Widget
         $scroll_select= ($instance['rtw_twitter_scroll']=='false' ? " selected " : '');
         $loop_select= ($instance['rtw_twitter_loop']=='false' ? " selected " : '');
         $live_select= ($instance['rtw_twitter_live']=='false' ? " selected " : '');
+        $logo_select= ($instance['rtw_twitter_show_logo']=='false' ? " selected " : '');
+        ;
+        
         
         ?>
-
+                                   
                              
             <label for="<?php echo $this->get_field_id('rtw_twitter_title'); ?>"><?php _e('Title:'); ?></label>			
             <input class="widefat" id="<?php echo $this->get_field_id('rtw_twitter_title'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_title'); ?>" type="text" value="<?php echo esc_attr($instance['rtw_twitter_title']); ?>" />
@@ -230,17 +247,104 @@ class rtw_twitter_widget extends WP_Widget
                 
             </select>
             <br>
+            
+            <label for="<?php echo $this->get_field_id('rtw_twitter_show_logo'); ?>"><?php _e('Show Twitter Logo'); ?></label>			
+            <select  id="<?php echo $this->get_field_id('rtw_twitter_show_logo'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_show_logo'); ?>" >
+            
+                <option value="true">True</option>
+                <option value="false" <?php echo $logo_select; ?> >False</option>
+                
+            </select>
     <?
     }
     
     
     
     
-    
+    public function get_logo_view()
+    {
+        global $logo;
+       $ops = get_option('widget_'.$this->id_base);
+       $i=0;
+       while(true){
+           if(isset($ops[$i]['rtw_twitter_show_logo']))
+                   break;
+           else
+               $i++;
+           
+       }
+       return $ops[$i]['rtw_twitter_show_logo'];
+    }
+
     
     
  } // rtw_twitter_widget Class Ends
 
 add_action( 'widgets_init', create_function( '', 'register_widget("rtw_twitter_widget");' ) );
 
+            
+ 
+      
+      
+      
+function twitter_logo_hider()
+{ 
+     $obj = new rtw_twitter_widget();
+     $view = $obj->get_logo_view();
+      
+     if($view=='true')
+         return;
+        ?>
+                <style type="text/css">
+                    .twtr-ft a img {
+                        display: none;
+                        
+                    }
+                 </style>
+                
+        <?php
+    }
+    
+add_action('wp_head','twitter_logo_hider');
+      
+
+
+
+
+function rimon_habib_donate()
+{
+    if(!strpos($_SERVER['REQUEST_URI'],'widgets.php'))
+            return;
+    ?>
+
+    <div class="paypal_donate update-nag" style="margin-top: 10px">
+    
+<form id="rimon_habib_donate" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="2TXZUHA8DEEWC">
+
+<input type="hidden" name="on0" value="Donation">
+<p style="margin-top: 10px; font-size: 14px; color: green;"  class="bpap_p">You are young Rimons Twitter Widget Plugin
+    Make a donation to support us if you liked this.</p>
+<div style="margin-top: 10px">
+<select name="os0" style="margin-left:0px">
+	<option value="Donate5">Donate $5.00 USD</option>
+	<option value="Donate10">Donate $10.00 USD</option>
+	<option value="Donate15">Donate $15.00 USD</option>
+        <option value="Donate20">Donate $20.00 USD</option>
+</select> 
+    <br>
+<input type="hidden" name="currency_code" value="USD">
+<input type="image" style="margin-top:5px; margin-left: 0px" src="http://rimonhabib.com/wp-content/uploads/2012/04/donate.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"
+       onclick="getElementById('rimon_habib_donate').submit()">
+      
+<img  alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>
+    </div>
+        
+    <?php
+}
+
+add_action('admin_notices','rimon_habib_donate');
 ?>
