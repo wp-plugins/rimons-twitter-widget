@@ -266,7 +266,8 @@ class rtw_twitter_widget extends WP_Widget
         global $logo;
        $ops = get_option('widget_'.$this->id_base);
        $i=0;
-       while(true){
+       
+       foreach($ops as $vals){
            if(isset($ops[$i]['rtw_twitter_show_logo']))
                    break;
            else
@@ -292,7 +293,7 @@ function twitter_logo_hider()
      $obj = new rtw_twitter_widget();
      $view = $obj->get_logo_view();
       
-     if($view=='true')
+     if($view!='false')
          return;
         ?>
                 <style type="text/css">
@@ -317,14 +318,14 @@ function rimon_habib_donate()
             return;
     ?>
 
-    <div class="paypal_donate update-nag" style="margin-top: 10px">
+    <div class="update-nag" style="margin-top: 10px">
     
 <form id="rimon_habib_donate" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="2TXZUHA8DEEWC">
 
 <input type="hidden" name="on0" value="Donation">
-<p style="margin-top: 10px; font-size: 14px; color: green;"  class="bpap_p">You are young Rimons Twitter Widget Plugin
+<p style="margin-top: 10px; font-size: 14px; color: green;" >You are young Rimons Twitter Widget Plugin
     Make a donation to support us if you liked this.</p>
 <div style="margin-top: 10px">
 <select name="os0" style="margin-left:0px">
