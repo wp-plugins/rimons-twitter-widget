@@ -267,14 +267,17 @@ class rtw_twitter_widget extends WP_Widget
        $ops = get_option('widget_'.$this->id_base);
        $i=0;
        
-       foreach($ops as $vals){
+       foreach((array)$ops as $vals){
            if(isset($ops[$i]['rtw_twitter_show_logo']))
                    break;
            else
                $i++;
            
        }
+       if($ops[$i]['rtw_twitter_show_logo'])
        return $ops[$i]['rtw_twitter_show_logo'];
+       else
+           return;
     }
 
     
