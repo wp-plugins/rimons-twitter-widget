@@ -24,12 +24,6 @@ register_deactivation_hook( __FILE__,'rtw_deactivate');
 
 
 
-	
-
-
-
-
-
 
   function rtw_activate(){
             update_option('rtw_admin_notice','TRUE');
@@ -328,7 +322,7 @@ function rimon_habib_donate()
 <input type="hidden" name="hosted_button_id" value="2TXZUHA8DEEWC">
 
 <input type="hidden" name="on0" value="Donation">
-<p style="margin-top: 10px; font-size: 14px; color: green;" >You are young Rimons Twitter Widget Plugin
+<p style="margin-top: 10px; font-size: 14px; color: green;" >You are using Rimons Twitter Widget Plugin
     Make a donation to support us if you liked this.</p>
 <div style="margin-top: 10px">
 <select name="os0" style="margin-left:0px">
