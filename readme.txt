@@ -39,3 +39,10 @@ http://rimonhabib.com
 * Widget style updated
 * performance updated
 * Structure updated
+
+= 0.5 =
+* New option added, twitter logo add or remove
+* structure updated
+
+= 0.6 =
+* New option added, twitter username add or remove
