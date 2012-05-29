@@ -2,7 +2,7 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 0.5
+ * Version: 0.6
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
@@ -142,6 +142,8 @@ class rtw_twitter_widget extends WP_Widget
                 $instance['rtw_twitter_loop'] = $new_instance['rtw_twitter_loop'];
                 $instance['rtw_twitter_live'] = $new_instance['rtw_twitter_live'];
                 $instance['rtw_twitter_show_logo'] = $new_instance['rtw_twitter_show_logo'];
+                $instance['rtw_twitter_show_username'] = $new_instance['rtw_twitter_show_username'];
+                $instance['rtw_twitter_show_credit'] = $new_instance['rtw_twitter_show_credit'];
                 
 		return $instance;
 	}
@@ -171,7 +173,9 @@ class rtw_twitter_widget extends WP_Widget
         $loop_select= ($instance['rtw_twitter_loop']=='false' ? " selected " : '');
         $live_select= ($instance['rtw_twitter_live']=='false' ? " selected " : '');
         $logo_select= ($instance['rtw_twitter_show_logo']=='false' ? " selected " : '');
-        ;
+        $username_select= ($instance['rtw_twitter_show_username']=='false' ? " selected " : '');
+        $credit_select= ($instance['rtw_twitter_show_credit']=='false' ? " selected " : '');
+        
         
         
         ?>
@@ -249,6 +253,26 @@ class rtw_twitter_widget extends WP_Widget
                 <option value="false" <?php echo $logo_select; ?> >False</option>
                 
             </select>
+            
+            <br>
+            
+            <label for="<?php echo $this->get_field_id('rtw_twitter_show_username'); ?>"><?php _e('Show Twitter Username'); ?></label>			
+            <select  id="<?php echo $this->get_field_id('rtw_twitter_show_username'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_show_username'); ?>" >
+            
+                <option value="true">True</option>
+                <option value="false" <?php echo $username_select; ?> >False</option>
+                
+            </select>
+            
+            <br>
+            
+            <label for="<?php echo $this->get_field_id('rtw_twitter_show_credit'); ?>"><?php _e('Credit link'); ?></label>			
+            <select  id="<?php echo $this->get_field_id('rtw_twitter_show_credit'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_show_credit'); ?>" >
+            
+                <option value="true">True</option>
+                <option value="false" <?php echo $credit_select; ?> >False</option>
+                
+            </select>
     <?
     }
     
@@ -257,21 +281,33 @@ class rtw_twitter_widget extends WP_Widget
     
     public function get_logo_view()
     {
-        global $logo;
        $ops = get_option('widget_'.$this->id_base);
        $i=0;
+       $extra_option = array();
+       $extra_option['got_logo'] = FALSE;
+       $extra_option['got_username'] = FALSE;
+       $extra_option['got_credit'] = FALSE;
        
-       foreach((array)$ops as $vals){
-           if(isset($ops[$i]['rtw_twitter_show_logo']))
-                   break;
-           else
-               $i++;
+       foreach((array)$ops as $key=>$vals){
            
+           if( $extra_option['got_logo'] && $extra_option['got_username'] && $extra_option['got_credit'])
+               break;
+           
+           if(isset($ops[$key]['rtw_twitter_show_logo']) && $ops[$key]['rtw_twitter_show_logo'] != 'false')
+                   $extra_option['got_logo'] = TRUE;
+           
+           if(isset($ops[$key]['rtw_twitter_show_username']) && $ops[$key]['rtw_twitter_show_username'] != 'false' )
+                   $extra_option['got_username'] = TRUE;
+           
+           if(isset($ops[$key]['rtw_twitter_show_credit']) && $ops[$key]['rtw_twitter_show_credit'] != 'false' )
+                   $extra_option['got_credit'] = TRUE;
+           
+           
+               $i++;
+            
        }
-       if($ops[$i]['rtw_twitter_show_logo'])
-       return $ops[$i]['rtw_twitter_show_logo'];
-       else
-           return;
+       
+       return $extra_option;
     }
 
     
@@ -289,9 +325,13 @@ function twitter_logo_hider()
 { 
      $obj = new rtw_twitter_widget();
      $view = $obj->get_logo_view();
-      
-     if($view!='false')
-         return;
+     ?> 
+            <script type="text/javascript"> 
+            alert("<?php print_r($view) ?>");
+            </script>
+     <?php       
+     if(!$view['got_logo'])
+     {
         ?>
                 <style type="text/css">
                     .twtr-ft a img {
@@ -299,8 +339,28 @@ function twitter_logo_hider()
                         
                     }
                  </style>
+                 
+        <?php
+     }
+     
+     if(!$view['got_username'])
+     {
+        ?>
+                <style type="text/css">
+                    .twtr-hd h4 {
+                        display: none;
+                        
+                    }
+                 </style>
                 
         <?php
+     }
+     
+     if($view['got_credit'])
+     {
+         
+        add_action('wp_footer','rimon_credit_link');
+     }
     }
     
 add_action('wp_head','twitter_logo_hider');
@@ -345,4 +405,10 @@ function rimon_habib_donate()
 }
 
 add_action('admin_notices','rimon_habib_donate');
+
+function rimon_credit_link()  {
+    echo '<a style="display:inline" href="http://wordpress.org/extend/plugins/rimons-twitter-widget/">Rimons twitter widget</a> by <a href="http://rimonhabib.com">Rimon Habib</a>';
+}
+
+
 ?>

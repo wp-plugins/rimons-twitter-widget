@@ -43,3 +43,6 @@ http://rimonhabib.com
 = 0.5 =
 * New option added, twitter logo add or remove
 * structure updated
+
+= 0.6 =
+* New option added, twitter username add or remove
