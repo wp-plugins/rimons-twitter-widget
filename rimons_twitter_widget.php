@@ -2,7 +2,7 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 0.6
+ * Version: 0.7
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
@@ -325,11 +325,7 @@ function twitter_logo_hider()
 { 
      $obj = new rtw_twitter_widget();
      $view = $obj->get_logo_view();
-     ?> 
-            <script type="text/javascript"> 
-            alert("<?php print_r($view) ?>");
-            </script>
-     <?php       
+          
      if(!$view['got_logo'])
      {
         ?>
