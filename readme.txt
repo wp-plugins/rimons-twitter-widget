@@ -11,7 +11,7 @@ This plugin allow you to grab your tweets from twitter and show your theme's sid
 == Description ==
 This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize color schemes and size to fit it to your sidebar.
 
-click <a href="http://rimonhabib.com/rimons-twitter-widget-0-5-released">here </a> to know more and if any questions
+click <a rel="dofollow" href="http://rimonhabib.com/rimons-twitter-widget-0-5-released">here </a> to know more and if any questions
 
 == Installation ==
 
@@ -24,7 +24,7 @@ More information, the latest updates can be found at
 http://rimonhabib.com
 
 == Screenshots ==
-<a href="http://rimonhabib.com/rimons-twitter-widget-0-5-released" > see here </a> for detail and screenshots
+<a rel="dofollow" href="http://rimonhabib.com/rimons-twitter-widget-0-5-released" > see here </a> for detail and screenshots
 
 == Changelog ==
 
@@ -50,3 +50,9 @@ http://rimonhabib.com
 
 = 0.6 =
 * New option added, twitter username add or remove
+
+= 0.7 =
+* New option added, twitter logo add or remove
+
+= 0.6 =
+* New options added, font size,avatar add or remove

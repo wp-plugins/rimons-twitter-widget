@@ -2,7 +2,7 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 0.7
+ * Version: 0.8
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
@@ -67,7 +67,7 @@ class rtw_twitter_widget extends WP_Widget
                   
 		extract( $args );
 		$title = apply_filters( 'widget_title', $instance['rtw_twitter_title'] );
-                   
+                    
 		echo $before_widget;
 		if ( $title )
 			echo $before_title . $title . $after_title; 
@@ -82,7 +82,7 @@ class rtw_twitter_widget extends WP_Widget
                                        new TWTR.Widget({
                                           version: 2,
                                           type: 'profile',
-                                          rpp: 7,
+                                          rpp: <?php echo $instance['rtw_twitter_number'] ?>,
                                           interval: 30000,
                                           width: <?php echo $instance['rtw_twitter_width'] ?>,
                                           height: <?php echo $instance['rtw_twitter_height'] ?> ,
@@ -101,7 +101,10 @@ class rtw_twitter_widget extends WP_Widget
                                             scrollbar: <?php echo $instance['rtw_twitter_scroll'] ?>,
                                             loop: <?php echo $instance['rtw_twitter_loop'] ?>,
                                             live: <?php echo $instance['rtw_twitter_live'] ?>,
-                                            behavior: 'all'
+                                            behavior: 'all',
+                                            avatars: <?php echo $instance['rtw_twitter_show_avatar'] ?>,
+                                            
+                                           
                                           }
                                         }).render().setUser('<?php echo $instance['rtw_twitter_username'] ?>').start();
                                         
@@ -130,7 +133,10 @@ class rtw_twitter_widget extends WP_Widget
         function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['rtw_twitter_title'] = strip_tags($new_instance['rtw_twitter_title']);
+                $instance['rtw_twitter_font_size'] = strip_tags($new_instance['rtw_twitter_font_size']);
+                
                 $instance['rtw_twitter_username'] = $new_instance['rtw_twitter_username'];
+                $instance['rtw_twitter_number'] = $new_instance['rtw_twitter_number'];
                 $instance['rtw_twitter_width'] = $new_instance['rtw_twitter_width'];
                 $instance['rtw_twitter_height'] = $new_instance['rtw_twitter_height'];
                 $instance['rtw_twitter_container_background'] = $new_instance['rtw_twitter_container_background'];
@@ -144,7 +150,7 @@ class rtw_twitter_widget extends WP_Widget
                 $instance['rtw_twitter_show_logo'] = $new_instance['rtw_twitter_show_logo'];
                 $instance['rtw_twitter_show_username'] = $new_instance['rtw_twitter_show_username'];
                 $instance['rtw_twitter_show_credit'] = $new_instance['rtw_twitter_show_credit'];
-                
+                $instance['rtw_twitter_show_avatar'] = $new_instance['rtw_twitter_show_avatar'];
 		return $instance;
 	}
         
@@ -161,12 +167,15 @@ class rtw_twitter_widget extends WP_Widget
     { 
         global $logo;
         
+        $instance['rtw_twitter_number']= ($instance['rtw_twitter_number'] ?  $instance['rtw_twitter_number'] : 7 );
         $instance['rtw_twitter_width']= ($instance['rtw_twitter_width'] ?  $instance['rtw_twitter_width'] : '198' );
         $instance['rtw_twitter_height']= ($instance['rtw_twitter_height'] ?  $instance['rtw_twitter_height'] : '300' );
         $instance['rtw_twitter_height']= ($instance['rtw_twitter_height'] ?  $instance['rtw_twitter_height'] : '300' );
         $instance['rtw_twitter_container_background']= ($instance['rtw_twitter_container_background'] ?  $instance['rtw_twitter_container_background'] : '#c4deeb' );
         $instance['rtw_twitter_container_color']= ($instance['rtw_twitter_container_color'] ?  $instance['rtw_twitter_container_color'] : '#3d2c3d' );
         $instance['rtw_twitter_tweet_background']= ($instance['rtw_twitter_tweet_background'] ?  $instance['rtw_twitter_tweet_background'] : '#eaf6fd' );
+        $instance['rtw_twitter_font_size']= ($instance['rtw_twitter_number'] ?  $instance['rtw_twitter_font_size'] : '' );
+        
         $instance['rtw_twitter_tweet_color']= ($instance['rtw_twitter_tweet_color'] ?  $instance['rtw_twitter_tweet_color'] : '#816666' );
         $instance['rtw_twitter_tweet_link_color']= ($instance['rtw_twitter_tweet_link_color'] ?  $instance['rtw_twitter_tweet_link_color'] : '#497da8' );
         $scroll_select= ($instance['rtw_twitter_scroll']=='false' ? " selected " : '');
@@ -174,7 +183,8 @@ class rtw_twitter_widget extends WP_Widget
         $live_select= ($instance['rtw_twitter_live']=='false' ? " selected " : '');
         $logo_select= ($instance['rtw_twitter_show_logo']=='false' ? " selected " : '');
         $username_select= ($instance['rtw_twitter_show_username']=='false' ? " selected " : '');
-        $credit_select= ($instance['rtw_twitter_show_credit']=='false' ? " selected " : '');
+        $credit_select= ($instance['rtw_twitter_show_avatar']=='false' ? " selected " : '');
+        $show_avatar= ($instance['rtw_twitter_show_credit']=='false' ? " selected " : '');
         
         
         
@@ -188,6 +198,11 @@ class rtw_twitter_widget extends WP_Widget
             <label for="<?php echo $this->get_field_id('rtw_twitter_username'); ?>"><?php _e('Your Twitter Username:'); ?></label>			
             <input class="widefat" id="<?php echo $this->get_field_id('rtw_twitter_username'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_username'); ?>" type="text" value="<?php echo esc_attr($instance['rtw_twitter_username']); ?>" />
             <br>
+            
+            <label for="<?php echo $this->get_field_id('rtw_twitter_number'); ?>"><?php _e('number of tweets:'); ?></label>			
+            <input class="widefat" id="<?php echo $this->get_field_id('rtw_twitter_number'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_number'); ?>" type="text" value="<?php echo esc_attr($instance['rtw_twitter_number']); ?>" />
+            <br>
+            
             
             <label for="<?php echo $this->get_field_id('rtw_twitter_width'); ?>"><?php _e('Width:'); ?></label>			
             <input class="widefat" size="3" id="<?php echo $this->get_field_id('rtw_twitter_width'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_width'); ?>" type="text" value="<?php echo esc_attr($instance['rtw_twitter_width']); ?>" />
@@ -207,6 +222,10 @@ class rtw_twitter_widget extends WP_Widget
             
             <label for="<?php echo $this->get_field_id('rtw_twitter_tweet_background'); ?>"><?php _e('Tweets Background:'); ?></label>			
             <input class="widefat"  id="<?php echo $this->get_field_id('rtw_twitter_tweet_background'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_tweet_background'); ?>" type="text" value="<?php echo esc_attr($instance['rtw_twitter_tweet_background']); ?>" />
+            <br>
+            
+            <label for="<?php echo $this->get_field_id('rtw_twitter_font_size'); ?>"><?php _e('Font size (in px):'); ?></label>			
+            <input class="widefat" id="<?php echo $this->get_field_id('rtw_twitter_font_size'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_font_size'); ?>" type="text" value="<?php echo esc_attr($instance['rtw_twitter_font_size']); ?>" />
             <br>
             
             <label for="<?php echo $this->get_field_id('rtw_twitter_tweet_color'); ?>"><?php _e('Tweet Text Color:'); ?></label>			
@@ -237,6 +256,7 @@ class rtw_twitter_widget extends WP_Widget
             
             
             
+            
             <label for="<?php echo $this->get_field_id('rtw_twitter_live'); ?>"><?php _e('Live:'); ?></label>			
             <select  id="<?php echo $this->get_field_id('rtw_twitter_live'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_live'); ?>" >
             
@@ -264,6 +284,18 @@ class rtw_twitter_widget extends WP_Widget
                 
             </select>
             
+            
+            <br>
+            
+            <label for="<?php echo $this->get_field_id('rtw_twitter_show_avatar'); ?>"><?php _e('Show avatar on tweets'); ?></label>			
+            <select  id="<?php echo $this->get_field_id('rtw_twitter_show_avatar'); ?>" name="<?php echo $this->get_field_name('rtw_twitter_show_avatar'); ?>" >
+            
+                <option value="true">True</option>
+                <option value="false" <?php echo $show_avatar; ?> >False</option>
+                
+            </select>
+            
+            
             <br>
             
             <label for="<?php echo $this->get_field_id('rtw_twitter_show_credit'); ?>"><?php _e('Credit link'); ?></label>			
@@ -273,6 +305,8 @@ class rtw_twitter_widget extends WP_Widget
                 <option value="false" <?php echo $credit_select; ?> >False</option>
                 
             </select>
+            
+            
     <?
     }
     
@@ -302,6 +336,9 @@ class rtw_twitter_widget extends WP_Widget
            if(isset($ops[$key]['rtw_twitter_show_credit']) && $ops[$key]['rtw_twitter_show_credit'] != 'false' )
                    $extra_option['got_credit'] = TRUE;
            
+           if($ops[$key]['rtw_twitter_font_size'])
+                   $extra_option['font_size'] = $ops[$key]['rtw_twitter_font_size'];
+           
            
                $i++;
             
@@ -325,7 +362,19 @@ function twitter_logo_hider()
 { 
      $obj = new rtw_twitter_widget();
      $view = $obj->get_logo_view();
-          
+     if($view['font_size']) {
+       ?> 
+     
+            <style type="text/css">
+                
+                .twtr-tweet-text p {
+                    font-size: <?php  echo $view['font_size']?>px;
+                }
+            </style>
+     
+     
+     <?php   
+     }
      if(!$view['got_logo'])
      {
         ?>
@@ -334,6 +383,8 @@ function twitter_logo_hider()
                         display: none;
                         
                     }
+                    
+                    
                  </style>
                  
         <?php
@@ -346,7 +397,7 @@ function twitter_logo_hider()
                     .twtr-hd h4 {
                         display: none;
                         
-                    }
+                    } 
                  </style>
                 
         <?php
@@ -374,10 +425,10 @@ function rimon_habib_donate()
     <div class="update-nag" style="margin-top: 10px">
     
 <form id="rimon_habib_donate" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="2TXZUHA8DEEWC">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="2TXZUHA8DEEWC" />
 
-<input type="hidden" name="on0" value="Donation">
+<input type="hidden" name="on0" value="Donation" />
 <p style="margin-top: 10px; font-size: 14px; color: green;" >You are using Rimons Twitter Widget Plugin
     Make a donation to support us if you liked this.</p>
 <div style="margin-top: 10px">
@@ -397,13 +448,14 @@ function rimon_habib_donate()
 </div>
     </div>
         
-    <?php
+<?php
 }
 
 add_action('admin_notices','rimon_habib_donate');
 
 function rimon_credit_link()  {
-    echo '<a style="display:inline" href="http://wordpress.org/extend/plugins/rimons-twitter-widget/">Rimons twitter widget</a> by <a href="http://rimonhabib.com">Rimon Habib</a>';
+    echo '<div style="width:280px; margin-left: auto; margin-right:auto" >
+        <a rel="dofollow" href="http://wordpress.org/extend/plugins/rimons-twitter-widget/">Rimons twitter widget</a> by <a rel="dofollow" href="http://rimonhabib.com">Rimon Habib</a></div>';
 }
 
 
