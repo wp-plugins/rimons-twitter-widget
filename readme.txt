@@ -56,3 +56,12 @@ http://rimonhabib.com
 
 = 0.6 =
 * New options added, font size,avatar add or remove
+
+= 0.7 =
+* Bug fixes
+
+= 0.8 =
+* Bug fixes
+
+= 0.9 =
+* Bug fixes
