@@ -2,7 +2,7 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 0.9
+ * Version: 1.0.0
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
@@ -14,39 +14,26 @@ register_activation_hook( __FILE__,'rtw_activate');
 
 register_deactivation_hook( __FILE__,'rtw_deactivate');
 
- function rtw_activation_notice(){
-    echo '<div class="updated" style="background-color: #53be2a; border-color:#199b57">
-	
-       <p>Thank you for installing <strong>Rimons Twitter Widget</strong>. See the <a href="'.site_url().'/wp-admin/widgets.php">Widget page</a> to configure twitter widget.</p>
-        </div>';
+function rtw_activation_notice(){
+    echo    '<div class="updated" style="background-color: #53be2a; border-color:#199b57">
+            <p>Thank you for installing <strong>Rimons Twitter Widget</strong>. See the <a href="'.site_url().'/wp-admin/widgets.php">Widget page</a> to configure twitter widget.</p>
+            </div>';
 }
 
+function rtw_activate(){
+    update_option('rtw_admin_notice','TRUE');
+}
 
+function rtw_deactivate(){
+// activate();
 
-
-
-  function rtw_activate(){
-            update_option('rtw_admin_notice','TRUE');
-  }
- 
-
+}
   
-  function rtw_deactivate(){
-  // activate();
-    
-  }
-  
-  
-  
-	$twitter_options=get_option('rtw_admin_notice');  
-	if($twitter_options=='TRUE' && is_admin())
-        add_action('admin_notices','rtw_activation_notice');
-        update_option('rtw_admin_notice','FALSE');
+$twitter_options=get_option('rtw_admin_notice');  
+if($twitter_options=='TRUE' && is_admin())
+add_action('admin_notices','rtw_activation_notice');
+update_option('rtw_admin_notice','FALSE');
         
-
-
-
-
 class rtw_twitter_widget extends WP_Widget
 {
 
@@ -56,13 +43,6 @@ class rtw_twitter_widget extends WP_Widget
 	
     }
     
-
-
-
-                            
-                            
-        
-
     function widget( $args, $instance ) {
                   
 		extract( $args );
@@ -110,26 +90,14 @@ class rtw_twitter_widget extends WP_Widget
                                         
                                    </script>
                           <?php
-                          
-                            
                           }
                           else {
                           echo "<p>Please Enter your twitter ID to show tweets from twitter</p>";
 
                           }
-                            echo $after_widget;
-                            
-                        
-                        
-	}
+                          echo $after_widget;
+        }
     
-    
-    
-
-        
-        
-        
-        
         function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['rtw_twitter_title'] = strip_tags($new_instance['rtw_twitter_title']);
@@ -154,15 +122,6 @@ class rtw_twitter_widget extends WP_Widget
 		return $instance;
 	}
         
-        
-        
-        
-        
-        
-    
-    
-    
-    
     function form ($instance)
     { 
         global $logo;
@@ -185,8 +144,6 @@ class rtw_twitter_widget extends WP_Widget
         $username_select= ($instance['rtw_twitter_show_username']=='false' ? " selected " : '');
         $credit_select= ($instance['rtw_twitter_show_avatar']=='false' ? " selected " : '');
         $show_avatar= ($instance['rtw_twitter_show_credit']=='false' ? " selected " : '');
-        
-        
         
         ?>
                                    
@@ -309,9 +266,6 @@ class rtw_twitter_widget extends WP_Widget
             
     <?
     }
-    
-    
-    
     
     public function get_logo_view(){
        $ops = get_option('widget_'.$this->id_base);
@@ -449,6 +403,5 @@ function rimon_credit_link()  {
     echo '<div style="width:280px; margin-left: auto; margin-right:auto" >
         <a rel="dofollow" href="http://wordpress.org/extend/plugins/rimons-twitter-widget/">Rimons twitter widget</a> by <a rel="dofollow" href="http://rimonhabib.com">Rimon Habib</a></div>';
 }
-
 
 ?>
