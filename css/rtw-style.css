@@ -1,0 +1,87 @@
+.rtw_container{
+	background: #C4DEEB;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.rtw_head{
+	padding: 10px;
+}
+.rtw_avatar{
+	float: left;
+}
+.rtw_avatar img{
+	width: 35px;
+	height: 35px;
+	margin-right: 10px;
+}
+
+.rtw_twitter_username {
+	margin-top: -3px;
+	float: left;
+}
+
+.rtw_twitter_username p ,.rtw_twitter_username h3{
+	margin: 0 !important;
+}
+.rtw_twitter_username p a,.rtw_twitter_username h3 a{
+	font-family: 'arial' !important;
+	color: #292929 !important;
+	text-decoration: none !important; 
+}
+.rtw_twitter_username p{
+	font-size: 12px !important;
+}
+.rtw_twitter_username h3{
+	font-size: 16px;
+}
+
+.rtw_tweets{
+	background: #EAF6FD;
+	margin-left: 1px;
+	margin-right: 1px;
+	height: 300px;
+	overflow-y: scroll;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.rtw_tweets li{
+	list-style: none;
+	padding: 7px;
+	border-bottom: 1px dotted #ddd;
+}
+
+.rtw_tweets li p{
+	font-size: 12px !important;
+	margin: 0 !important;
+	color: #81667D !important;
+	line-height: 1.5 !important;
+}
+.rtw_tweets li p a{
+	color: #497DB5 !important;
+}
+.rtw_tweets li p.tweet_meta{
+	font-size: 10px !important;
+}
+	
+.rtw_tweets li a{
+	text-decoration: none;
+	color: #497DB5;
+}
+.rtw_footer{
+	padding: 10px;
+}
+
+.rtw_footer .twitter_widget_footer_logo{
+	float: left;
+}
+
+.rtw_footer .twitter_widget_footer_link{
+	float: right;
+}
+
+.rtw_footer .twitter_widget_footer_link a{
+	color: #3D2C3D !important;
+	font-size: 11px !important;
+	text-decoration: none;
+}
