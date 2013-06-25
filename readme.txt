@@ -70,3 +70,7 @@ http://rimonhabib.com
 
 = 1.2 =
 * updated with twitter api version 1.1
+
+= 1.2.1 =
+* updated with twitter api version 1.1
+* widget error fix

@@ -2,12 +2,12 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 1.2
+ * Version: 1.2.1
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
  */
-define('RTW_VERSION','1.2');
+define('RTW_VERSION','1.2.1');
 define('RTW_ROOT',dirname(__FILE__).'/');
 define('RTW_INC',BNCF_ROOT.'include/');
 define('RTW_LIB',BNCF_ROOT.'lib/');
@@ -259,17 +259,9 @@ function rtw_tweet_markup($skin,$max_tweet){
 //////////////////////////////////////////////////////////////////////////////
 
 function rtw_load_style_scripts(){
-    wp_register_style( 'rtw-colorpick-style', plugins_url('/colorpicker/css/colorpicker.css', __FILE__) );
-    wp_enqueue_style( 'rtw-colorpick-style' );
-
     wp_register_style( 'rtw-admin-style', RTW_CSS_URL.'rtw-admin.css' );
     wp_enqueue_style( 'rtw-admin-style' );
-    
-    wp_enqueue_script(
-		'rtw-colorpicker',
-		plugins_url('/colorpicker/js/colorpicker.js', __FILE__),
-                array('jquery')
-	);
+
 }
 add_action('admin_enqueue_scripts','rtw_load_style_scripts');
 
@@ -281,31 +273,6 @@ function rtw_load_style(){
 }
 add_action('wp_enqueue_scripts','rtw_load_style');
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-function rtw_color_picker(){
-?>
-<script type="text/javascript">
-var j = jQuery;
-j(document).ready(function(){
-j('.colorpick').ColorPicker({
-	onSubmit: function(hsb, hex, rgb, el) {
-		j(el).val('#'+hex);
-		j(el).ColorPickerHide();
-	},
-	onBeforeShow: function () {
-		j(this).ColorPickerSetColor(this.value);
-	}
-	
-})
-.bind('keyup', function(){
-	j(this).ColorPickerSetColor(this.value);
-});
-});
-</script>
-<?php
-}
-add_action('admin_head','rtw_color_picker');
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

@@ -70,7 +70,7 @@ class rtw_twitter_widget extends WP_Widget{
     $live_select= ($instance['rtw_twitter_live']=='false' ? " selected " : '');
     $logo_select= ($instance['rtw_twitter_show_logo']=='false' ? " selected " : '');
     $username_select= ($instance['rtw_twitter_show_username']=='false' ? " selected " : '');
-    $show_avatar= ($instance['rtw_twitter_show_credit']=='false' ? " selected " : '');
+    $credit_select = ($instance['rtw_twitter_show_credit']=='false' ? " selected " : '');
     
     ?>
                   
