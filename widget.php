@@ -166,7 +166,7 @@ class rtw_twitter_widget extends WP_Widget{
     
   public function rtw_get_style(){
      $ops = get_option('widget_'.$this->id_base);
-     $key = count($ops);
+     $key = key( array_slice( $ops, -2, 1, TRUE ) );
      $style = '<style type="text/css">';
      
          
