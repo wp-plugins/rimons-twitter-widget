@@ -2,12 +2,12 @@
 /* Plugin Name: Rimons Twitter Widget
  * Plugin URI: http://rimonhabib.com
  * Description: This plugin allow you to grab your tweets from twitter and show your theme's sidebar as widget. You can customize   color schemes and size to fit it to your sidebar.after installing, See the <a href="/wp-admin/widgets.php">Widget page</a> to configure twitter widget
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: Rimon Habib
  * Author URI: http://rimonhabib.com
  *
  */
-define('RTW_VERSION','1.2.2');
+define('RTW_VERSION','1.2.3');
 define('RTW_ROOT',dirname(__FILE__).'/');
 define('RTW_INC',BNCF_ROOT.'include/');
 define('RTW_LIB',BNCF_ROOT.'lib/');
@@ -216,6 +216,7 @@ function rtw_tweet_markup($skin,$max_tweet){
             </div>
 
             <div class="rtw_tweets">
+                <ul>
                 <?php for($i=0; $i<$max_tweet; $i++){
                     $tweet = $tweets[$i]->text;
                     $tweet = rtw_make_links($tweet);
@@ -226,19 +227,19 @@ function rtw_tweet_markup($skin,$max_tweet){
                     $time = $tweets[$i]->created_at;
                     $tweet_url = 'https://twitter.com/'.$uname.'/status/'.$tweet_id;
                     ?>
-                    <li class="tweet">
-                        <p>
-                            <a href="<?php echo $url ?>"><?php echo $uname ?></a> <?php echo $tweet ?>
-                        </p>
-                        <p class="tweet_meta">
-                            <span><a target="_blank" href="<?php echo $tweet_url ?>"><?php echo human_time_diff( strtotime($time), time() ) ?></a></span>
-                            <span><a target="_blank" href="<?php echo $tweet_url ?>"> . reply</a></span>
-                            <span><a target="_blank" href="<?php echo $tweet_url ?>"> . retweet</a></span>
-                            <span><a target="_blank" href="<?php echo $tweet_url ?>"> . favorite</a></span>
-                        <p>
-                    </li>
-                    <?php
-                } ?>
+                    
+                        <li class="tweet">
+                            <p><a href="<?php echo $url ?>"><?php echo $uname ?></a> <?php echo $tweet ?></p>
+                            <p class="tweet_meta">
+                                <span><a target="_blank" href="<?php echo $tweet_url ?>"><?php echo human_time_diff( strtotime($time), time() ) ?></a></span>
+                                <span><a target="_blank" href="<?php echo $tweet_url ?>"> . reply</a></span>
+                                <span><a target="_blank" href="<?php echo $tweet_url ?>"> . retweet</a></span>
+                                <span><a target="_blank" href="<?php echo $tweet_url ?>"> . favorite</a></span>
+                            <p>
+                        </li>
+                    
+                <?php } ?>
+                </ul>
             </div>
 
             <div class="rtw_footer">
@@ -306,9 +307,9 @@ function rimon_habib_donate()
     Make a donation to support us if you liked this.</p>
 <div style="margin-top: 10px">
 <select name="os0" style="margin-left:0px">
-	<option value="Donate5">Donate $5.00 USD</option>
-	<option value="Donate10">Donate $10.00 USD</option>
-	<option value="Donate15">Donate $15.00 USD</option>
+    <option value="Donate5">Donate $5.00 USD</option>
+    <option value="Donate10">Donate $10.00 USD</option>
+    <option value="Donate15">Donate $15.00 USD</option>
         <option value="Donate20">Donate $20.00 USD</option>
 </select> 
     <br>
